@@ -2,7 +2,7 @@
 
 This is an application written in C# and OOP language that book recommendation 
 
-<image src ="https://hizliresim.com/5b0priw">
+<image src ="https://github.com/rabia22ozturk/ayisigi_otel/blob/master/ayisigi_anasayfa.png">
 
 ## 🛠️ Built With
 - C#
