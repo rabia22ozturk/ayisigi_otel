@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ayotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="KullaniciGirisKayitlari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciId" Type="int" />
+          <Property Name="GirisTarih" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar(max)" />
+          <Property Name="Sifre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="varchar" MaxLength="50" />
+          <Property Name="Soyadi" Type="varchar" MaxLength="50" />
+          <Property Name="Cinsiyet" Type="varchar" MaxLength="50" />
+          <Property Name="Telefon" Type="varchar" MaxLength="50" />
+          <Property Name="Mail" Type="varchar" MaxLength="50" />
+          <Property Name="TC" Type="varchar" MaxLength="12" />
+          <Property Name="OdaNo" Type="varchar" MaxLength="5" />
+          <Property Name="Ucret" Type="int" />
+          <Property Name="GirisTarihi" Type="date" />
+          <Property Name="CikisTarihi" Type="date" />
+        </EntityType>
+        <EntityType Name="OdaDurumlari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OdaId" Type="int" Nullable="false" />
+          <Property Name="MusteriId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Odalar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OdaNo" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_KullaniciGirisKayitlari_Kullanicilar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="KullaniciGirisKayitlari" Type="Self.KullaniciGirisKayitlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KullaniciGirisKayitlari">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OdaDurumlari_Musteriler">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="1" />
+          <End Role="OdaDurumlari" Type="Self.OdaDurumlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="OdaDurumlari">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OdaDurumlari_Odalar">
+          <End Role="Odalar" Type="Self.Odalar" Multiplicity="1" />
+          <End Role="OdaDurumlari" Type="Self.OdaDurumlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Odalar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OdaDurumlari">
+              <PropertyRef Name="OdaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ayotelModelStoreContainer">
+          <EntitySet Name="KullaniciGirisKayitlari" EntityType="Self.KullaniciGirisKayitlari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteriler" EntityType="Self.Musteriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OdaDurumlari" EntityType="Self.OdaDurumlari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Odalar" EntityType="Self.Odalar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_KullaniciGirisKayitlari_Kullanicilar" Association="Self.FK_KullaniciGirisKayitlari_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="KullaniciGirisKayitlari" EntitySet="KullaniciGirisKayitlari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OdaDurumlari_Musteriler" Association="Self.FK_OdaDurumlari_Musteriler">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="OdaDurumlari" EntitySet="OdaDurumlari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OdaDurumlari_Odalar" Association="Self.FK_OdaDurumlari_Odalar">
+            <End Role="Odalar" EntitySet="Odalar" />
+            <End Role="OdaDurumlari" EntitySet="OdaDurumlari" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ayotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AyotelEntity" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="KullaniciGirisKayitlari" EntityType="ayotelModel.KullaniciGirisKayitlari" />
+          <EntitySet Name="Kullanicilar" EntityType="ayotelModel.Kullanicilar" />
+          <EntitySet Name="Musteriler" EntityType="ayotelModel.Musteriler" />
+          <EntitySet Name="OdaDurumlari" EntityType="ayotelModel.OdaDurumlari" />
+          <EntitySet Name="Odalar" EntityType="ayotelModel.Odalar" />
+          <EntitySet Name="sysdiagrams" EntityType="ayotelModel.sysdiagrams" />
+          <AssociationSet Name="FK_KullaniciGirisKayitlari_Kullanicilar" Association="ayotelModel.FK_KullaniciGirisKayitlari_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="KullaniciGirisKayitlari" EntitySet="KullaniciGirisKayitlari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OdaDurumlari_Musteriler" Association="ayotelModel.FK_OdaDurumlari_Musteriler">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="OdaDurumlari" EntitySet="OdaDurumlari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OdaDurumlari_Odalar" Association="ayotelModel.FK_OdaDurumlari_Odalar">
+            <End Role="Odalar" EntitySet="Odalar" />
+            <End Role="OdaDurumlari" EntitySet="OdaDurumlari" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="KullaniciGirisKayitlari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciId" Type="Int32" />
+          <Property Name="GirisTarih" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Kullanicilar" Relationship="ayotelModel.FK_KullaniciGirisKayitlari_Kullanicilar" FromRole="KullaniciGirisKayitlari" ToRole="Kullanicilar" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KullaniciGirisKayitlari" Relationship="ayotelModel.FK_KullaniciGirisKayitlari_Kullanicilar" FromRole="Kullanicilar" ToRole="KullaniciGirisKayitlari" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Soyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cinsiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TC" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="OdaNo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Ucret" Type="Int32" />
+          <Property Name="GirisTarihi" Type="DateTime" Precision="0" />
+          <Property Name="CikisTarihi" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="OdaDurumlari" Relationship="ayotelModel.FK_OdaDurumlari_Musteriler" FromRole="Musteriler" ToRole="OdaDurumlari" />
+        </EntityType>
+        <EntityType Name="OdaDurumlari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OdaId" Type="Int32" Nullable="false" />
+          <Property Name="MusteriId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Musteriler" Relationship="ayotelModel.FK_OdaDurumlari_Musteriler" FromRole="OdaDurumlari" ToRole="Musteriler" />
+          <NavigationProperty Name="Odalar" Relationship="ayotelModel.FK_OdaDurumlari_Odalar" FromRole="OdaDurumlari" ToRole="Odalar" />
+        </EntityType>
+        <EntityType Name="Odalar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OdaNo" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OdaDurumlari" Relationship="ayotelModel.FK_OdaDurumlari_Odalar" FromRole="Odalar" ToRole="OdaDurumlari" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_KullaniciGirisKayitlari_Kullanicilar">
+          <End Type="ayotelModel.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+          <End Type="ayotelModel.KullaniciGirisKayitlari" Role="KullaniciGirisKayitlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KullaniciGirisKayitlari">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OdaDurumlari_Musteriler">
+          <End Type="ayotelModel.Musteriler" Role="Musteriler" Multiplicity="1" />
+          <End Type="ayotelModel.OdaDurumlari" Role="OdaDurumlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="OdaDurumlari">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OdaDurumlari_Odalar">
+          <End Type="ayotelModel.Odalar" Role="Odalar" Multiplicity="1" />
+          <End Type="ayotelModel.OdaDurumlari" Role="OdaDurumlari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Odalar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OdaDurumlari">
+              <PropertyRef Name="OdaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ayotelModelStoreContainer" CdmEntityContainer="AyotelEntity" >
+          <EntitySetMapping Name="KullaniciGirisKayitlari">
+            <EntityTypeMapping TypeName="ayotelModel.KullaniciGirisKayitlari">
+              <MappingFragment StoreEntitySet="KullaniciGirisKayitlari">
+                <ScalarProperty Name="GirisTarih" ColumnName="GirisTarih" />
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilar">
+            <EntityTypeMapping TypeName="ayotelModel.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteriler">
+            <EntityTypeMapping TypeName="ayotelModel.Musteriler">
+              <MappingFragment StoreEntitySet="Musteriler">
+                <ScalarProperty Name="CikisTarihi" ColumnName="CikisTarihi" />
+                <ScalarProperty Name="GirisTarihi" ColumnName="GirisTarihi" />
+                <ScalarProperty Name="Ucret" ColumnName="Ucret" />
+                <ScalarProperty Name="OdaNo" ColumnName="OdaNo" />
+                <ScalarProperty Name="TC" ColumnName="TC" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Cinsiyet" ColumnName="Cinsiyet" />
+                <ScalarProperty Name="Soyadi" ColumnName="Soyadi" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OdaDurumlari">
+            <EntityTypeMapping TypeName="ayotelModel.OdaDurumlari">
+              <MappingFragment StoreEntitySet="OdaDurumlari">
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+                <ScalarProperty Name="OdaId" ColumnName="OdaId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Odalar">
+            <EntityTypeMapping TypeName="ayotelModel.Odalar">
+              <MappingFragment StoreEntitySet="Odalar">
+                <ScalarProperty Name="OdaNo" ColumnName="OdaNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ayotelModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
